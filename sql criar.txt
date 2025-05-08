@@ -1,0 +1,34 @@
+CREATE DATABASE IF NOT EXISTS controle_epi;
+USE controle_epi;
+
+-- Tabela de EPIs
+CREATE TABLE IF NOT EXISTS epi (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao VARCHAR(255),
+    validade DATE,
+    quantidade INT NOT NULL DEFAULT 0
+);
+
+-- Tabela de Funcionários
+CREATE TABLE IF NOT EXISTS funcionario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) UNIQUE NOT NULL,
+    cargo VARCHAR(50),
+    departamento VARCHAR(50)
+);
+
+-- Tabela de Empréstimos
+CREATE TABLE IF NOT EXISTS emprestimo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_funcionario INT NOT NULL,
+    id_epi INT NOT NULL,
+    data_emprestimo DATE NOT NULL,
+    data_devolucao_prevista DATE NOT NULL,
+    data_devolucao_real DATE,
+    quantidade INT NOT NULL,
+    status VARCHAR(20) NOT NULL DEFAULT 'Ativo',
+    FOREIGN KEY (id_funcionario) REFERENCES funcionario(id),
+    FOREIGN KEY (id_epi) REFERENCES epi(id)
+);
